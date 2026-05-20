@@ -115,29 +115,6 @@ def grafico_stato_relè(dati, ax):
     plt.setp(ax.xaxis.get_majorticklabels(), rotation=30, ha="right")
     ax.grid(axis="y", linewidth=0.5, alpha=0.4)
 
-def grafico_distribuzione(dati, ax):
-    colori = {
-        "VASCA PRINCIPALE": "#378ADD",
-        "VASCA CALDA":      "#E24B4A",
-        "VASCA FREDDA":     "#1D9E75",
-    }
-
-    for vasca, valori in dati.items():
-        if valori["temp"]:
-            ax.hist(valori["temp"], bins=15,
-                    alpha=0.5, color=colori[vasca],
-                    label=vasca.title(), edgecolor="none")
-
-    ax.axvline(TEMP_MIN,    color="#888780", linewidth=1, linestyle=":")
-    ax.axvline(TEMP_MAX,    color="#888780", linewidth=1, linestyle=":")
-    ax.axvline(TEMP_IDEALE, color="#888780", linewidth=1, linestyle="--")
-
-    ax.set_title("Distribuzione temperature", fontsize=13, fontweight="normal", pad=12)
-    ax.set_xlabel("°C")
-    ax.set_ylabel("Frequenza")
-    ax.legend(fontsize=9, framealpha=0.5)
-    ax.grid(axis="y", linewidth=0.5, alpha=0.4)
-
 def main():
     dati = carica_dati()
 
@@ -153,7 +130,6 @@ def main():
     grafico_temperature(dati,        axes[0, 0])
     grafico_lux(dati,                axes[0, 1])
     grafico_stato_relè(dati,         axes[1, 0])
-    grafico_distribuzione(dati,      axes[1, 1])
 
     plt.tight_layout()
     plt.savefig("vasche_report.png", dpi=150, bbox_inches="tight")
